@@ -17,16 +17,9 @@ const MessageEl: FC<MessageElProps> = ({message}) => {
 
   return <div className={styles.container}>
     <div
-        key={message.id}
-        className={styles.message}
-        style={{
-          marginLeft: randomTrueFalse
-            ? '' 
-            : 'auto',
-          backgroundColor: randomTrueFalse
-            ? ''
-            : 'var(--color-primary)',
-        }}>
+      key={message.id}
+      className={`${styles.message} ${ randomTrueFalse ? styles.mymessage : ''}`}
+    >
       {message.content}
     </div>
   </div>

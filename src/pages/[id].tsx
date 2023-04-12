@@ -17,7 +17,7 @@ const Home: FC = () => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  });
 
   return (
     <>

@@ -4,12 +4,16 @@
   margin: 0.5rem 0;
   padding: 0.5rem;
   border-radius: 0.5rem;
-  background-color: #fff;
-  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
-  color: #000;
+  background-color: var(--color-messagebox-background);
 
   align-self: flex-start;
   max-width: 80%;
+}
+
+.mymessage {
+  background-color: var(--color-primary);
+  color: #FFF;
+  margin-left: auto;
 }
 
 .container {
