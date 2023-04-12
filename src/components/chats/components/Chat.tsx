@@ -44,7 +44,7 @@ const Chats: FC<ChatProps> = ({chat}) => {
 
   return <Link href={`/${id}`} className={`${styles.layout} ${ active ? styles.active : '' }`}>
     <div className={styles.avatar}>
-      <Avatar abbr={nameAbbreviation} />
+      <Avatar abbr={nameAbbreviation} active={active} />
     </div>
     <div className={styles.info}>
       <Info title={title} text={chat.lastMessage.content} active={active}/>

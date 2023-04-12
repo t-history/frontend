@@ -1,5 +1,4 @@
 :root {
-  --color-primary: #0071ff;
   --color-chat-hover: #F4F4F4;
   --color-background: #FFF;
 
@@ -12,12 +11,12 @@
   --color-avatar-background: #C0C0C0;
 
   // for all schemes
+  --color-primary: #4c91c7;
   --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto", "Apple Color Emoji", "Helvetica Neue", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: #a071ff;
     --color-chat-hover: #2B2B2B;
     --color-background: #212121;
     
