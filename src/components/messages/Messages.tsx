@@ -36,7 +36,7 @@ const Messages: FC<MessagesProps> = ({id}) => {
     {loading
       ? <div>Loading...</div>
       : messages.map((message) => {
-        return <MessageEl message={message} key={message.id} />
+        return <MessageEl message={message} key={message.id} isOwnMessage={message.sender !== id}/>
       })
     }
   </div>

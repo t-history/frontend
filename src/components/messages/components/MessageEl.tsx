@@ -10,15 +10,14 @@ export interface Message {
 
 interface MessageElProps {
   message: Message;
+  isOwnMessage: boolean;
 }
 
-const MessageEl: FC<MessageElProps> = ({message}) => {
-  const randomTrueFalse = Math.random() >= 0.5;
-
+const MessageEl: FC<MessageElProps> = ({message, isOwnMessage}) => {
   return <div className={styles.container}>
     <div
       key={message.id}
-      className={`${styles.message} ${ randomTrueFalse ? styles.mymessage : ''}`}
+      className={`${styles.message} ${ isOwnMessage ? styles.mymessage : ''}`}
     >
       {message.content}
     </div>
