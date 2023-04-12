@@ -34,8 +34,10 @@ const Messages: FC<MessagesProps> = ({id}) => {
 
   return <div className={styles.layout}>
     {loading
-      ? <div>Loading...</div>
-      : messages.map((message) => {
+      ? <div className={styles.empty}>Loading...</div>
+      : messages.length === 0
+        ? <div className={styles.empty}>Messages not loaded to server</div>
+        : messages.map((message) => {
         return <MessageEl message={message} key={message.id} isOwnMessage={message.sender !== id}/>
       })
     }
