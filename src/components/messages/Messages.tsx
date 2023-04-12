@@ -1,13 +1,7 @@
 import {FC, useState, useEffect} from 'react';
 import styles from './Messages.module.scss';
 import axios from 'axios';
-
-export interface Message {
-  id: number;
-  content: string;  
-  sender: number;
-  unixtime: number;
-}
+import MessageEl, {type Message} from './components/MessageEl';
 
 interface MessagesProps {
   id: number;
@@ -39,13 +33,10 @@ const Messages: FC<MessagesProps> = ({id}) => {
   }, [id]);
 
   return <div className={styles.layout}>
-    {id}
     {loading
       ? <div>Loading...</div>
       : messages.map((message) => {
-        return <div key={message.id}>
-          {message.content}
-        </div>
+        return <MessageEl message={message} key={message.id} />
       })
     }
   </div>

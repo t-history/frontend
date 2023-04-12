@@ -1,5 +1,7 @@
 .layout {
   display: flex;
-  flex-direction: column;
-  height: 100vh;
+  flex-direction: column-reverse;
+  overflow-y: auto;
+  height: calc(100vh - var(--topbar-height));
+  padding: 2rem 0;
 }

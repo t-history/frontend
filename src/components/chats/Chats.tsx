@@ -1,9 +1,9 @@
-import {FC, HTMLAttributes} from 'react';
+import {FC} from 'react';
 import Chat from './components/Chat';
 import styles from './Chats.module.scss';
 
 
-interface ChatsProps extends HTMLAttributes<HTMLDivElement> {
+interface ChatsProps {
   data: any[];
   loading: boolean;
 }
