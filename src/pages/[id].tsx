@@ -33,7 +33,7 @@ const Home: FC = () => {
   return (
     <div className={styles.layout}>
       <Head>
-        <title>THistory</title>
+        <title>ID</title>
         <meta name="description" content="App for store telegram message history" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -41,7 +41,7 @@ const Home: FC = () => {
       <div className={styles.sidebar}>
         <Chats data={chats} loading={loading}/>
       </div>
-      {/* <Messages className={styles.messages} /> */}
+      <Messages className={styles.messages} />
     </div>
   )
 }

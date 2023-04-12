@@ -11,6 +11,10 @@
   &:hover {
     background-color: var(--color-chat-hover);
   }
+
+  &.active {
+    background-color: var(--color-primary);
+  }
 }
 
 .avatar {
