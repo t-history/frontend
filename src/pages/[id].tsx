@@ -1,9 +1,24 @@
 import { FC } from 'react'
 import Head from 'next/head'
-import MainLayout from '@/components/layouts/MainLayout'
 import Messages from '@/components/messages/Messages'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const Home: FC = () => {
+  const { push } = useRouter()
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    event.key === 'Escape' && push('/')
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
       <Head>
