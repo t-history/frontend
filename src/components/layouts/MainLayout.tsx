@@ -17,7 +17,6 @@ const MainLayout: FC<LayoutProps> = ({children}) => {
     const fetchChats = async () => {
       try {
         const response = await axios.get("/api/chats");
-        console.log("response.data", response.data);
         setChats(response.data);
       } catch (error) {
         console.error("Error on receive data:", error);

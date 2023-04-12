@@ -1,11 +1,10 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import Head from 'next/head'
-import Messages from '@/components/messages/Messages'
-import { useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Messages from '@/components/messages/Messages'
 
 const Home: FC = () => {
-  const { push } = useRouter()
+  const { push, query } = useRouter()
 
   const handleKeyDown = (event: KeyboardEvent) => {
     event.key === 'Escape' && push('/')
@@ -27,7 +26,7 @@ const Home: FC = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Messages />
+      <Messages id={Number(query.id)} />
     </>
   )
 }
