@@ -5,7 +5,6 @@ import { Chat } from '@/components/chats/components/Chat'
 import { FC, useState, useEffect } from 'react'
 import axios from 'axios'
 
-
 interface LayoutProps {
   children?: React.ReactNode;
 }
@@ -44,7 +43,6 @@ const MainLayout: FC<LayoutProps> = ({children}) => {
       <div className={styles.messages}>
         {children}
       </div>
-      {/* <Messages className={styles.messages} /> */}
     </div>
   )
 }
