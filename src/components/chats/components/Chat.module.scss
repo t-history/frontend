@@ -1,0 +1,35 @@
+.layout {
+  height: 4.5rem;
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: 'avatar name';
+  align-items: center;
+  padding: 0 0.75rem;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: var(--color-chat-hover);
+  }
+}
+
+.avatar {
+  grid-area: avatar;
+  height: 3.375rem;
+  width: 3.375rem;  
+  margin: auto;
+}
+
+.info {
+  grid-area: name;
+  height: 3.375rem;
+  
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  // justify-content: flex-start;
+  // padding-left: 1rem;
+  // font-size: 1.125rem;
+  // font-weight: 500;
+}

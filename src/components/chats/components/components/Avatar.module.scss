@@ -1,0 +1,13 @@
+.layout {
+  height:100%;
+  width:100%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  border-radius: 50%;
+  background-color: var(--color-avatar-background);
+  color: var(--color-text);
+}
