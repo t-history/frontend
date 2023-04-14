@@ -1,36 +1,38 @@
 import {FC} from 'react';
 import styles from './Avatar.module.scss';
+import GraphemeSplitter from 'grapheme-splitter';
 
 interface AvatarProps {
   title: string;
   active?: boolean;
 }
 
-const Avatar: FC<AvatarProps> = ({title, active = false}) => {
-  // name abbreviation for chat title (e.g. "Telegram chat with Artem" => "TA")
-  const createAbbreviation = (str: string) => {
-    const words = str.split(' ');
-        
-    if (words.length === 0) {
-      return 'No name';
-    }
-    
-    const firstLetter = str.charAt(0).toUpperCase();
-    if (words.length === 1) {
-      return firstLetter
-    }
+// name abbreviation for chat title (e.g. "Telegram chat with Artem" => "TA")
+function makeAbbreviation(input: string): string {
+  const words = input.trim().split(/\s+/);
+  const firstWord = words[0];
+  const lastWord = words[words.length - 1];
 
-    const lastLetter = words[words.length - 1].charAt(0).toUpperCase();
-    
-    return `${firstLetter}${lastLetter}`;
+  if (words.length === 0) {
+    return 'No name';
   }
 
-  const abbr = createAbbreviation(title);
+  const splitter = new GraphemeSplitter();
+  const firstLetter = splitter.splitGraphemes(firstWord)[0];
+  const lastLetter = splitter.splitGraphemes(lastWord)[0];
 
-  const color = active ? '#fff' : '';
+  if (words.length === 1) {
+    return firstLetter;
+  }
+
+  return firstLetter + lastLetter;
+}
+
+const Avatar: FC<AvatarProps> = ({title, active = false}) => {
+  const abbr = makeAbbreviation(title);
+  const activeClass = active ? styles.active : '';
   return <div
-    className={styles.layout}
-    style={{color}}
+    className={`${styles.layout} ${activeClass}`}
   >
     {abbr}
   </div>

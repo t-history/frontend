@@ -8,11 +8,15 @@ interface InfoProps {
 }
 
 const Info: FC<InfoProps> = ({title, text, active}) => {
-  const color = active ? '#fff' : '';
+  const activeClass = active ? styles.active : '';
 
   return <div className={styles.layout}>
-      <div className={styles.title} style={{color}}>{title}</div>
-      <div className={styles.text} style={{color}}>{text}</div>
+      <div className={`${styles.layout} ${activeClass}`}>
+        {title}
+      </div>
+      <div className={`${styles.text} ${activeClass}`}>
+        {text}
+      </div>
   </div>
 }
 

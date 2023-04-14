@@ -6,3 +6,23 @@
   width: 100%;
   color: var(--color-text-secondary);
 }
+
+.layout {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: 'sidebar messages';
+  height: 100vh;
+}
+
+.messages {
+  grid-area: messages;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  height: 100vh;
+  overflow-y: auto;
+}
