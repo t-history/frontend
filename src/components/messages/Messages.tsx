@@ -13,26 +13,24 @@ const Messages: FC<MessagesProps> = ({id}) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [scrollParentRef, setScrollParentRef] = useState<HTMLDivElement | null>(null);
+  const [isEmptyMessages, setEmptyMessages] = useState<boolean>(false);
 
   const fetchMessageChunk = async () => {
-    if (isLoading) return;
-    setLoading(true);
-
     console.log("fetchMessageChunk");
     try {
-      const oldesMessageId = messages.length > 0 ? messages[messages.length - 1].id : 0;
+      const oldesMessageId = messages.length > 0 ? messages[0].id : 0;
       
       const response = await axios.get(
         `/api/chats/${id}/messages?fromMessageId=${oldesMessageId}`
       );
 
-      const newMessages = response.data;
-      setMessages([...newMessages, ...messages]);
-      setHasMore(newMessages.length > 0);
-
-      // TODO on load last message chunk
+      const newMessages = [...response.data, ...messages];
+      setMessages(newMessages);
+      setHasMore(response.data.length > 0);
+      setEmptyMessages(newMessages.length === 0);
     } catch (error) {
       console.error("Error on receive data:", error);
+      setHasMore(false);
     } finally {
       setLoading(false);
     }
@@ -43,8 +41,9 @@ const Messages: FC<MessagesProps> = ({id}) => {
       setMessages([]);
       setLoading(false);
       setHasMore(true);
+      setEmptyMessages(false);
     }
-  }, []);
+  }, [id]);
 
   const messagesRendered = messages.map((message) => {
     return <MessageEl message={message} key={message.id} isOwnMessage={message.sender !== id}/>
@@ -52,25 +51,27 @@ const Messages: FC<MessagesProps> = ({id}) => {
 
   const InfiniteScrollEl = <InfiniteScroll
       pageStart={0}
-      loadMore={fetchMessageChunk}
+      loadMore={() => {
+        console.log("loadMore");
+        if (isLoading) return;
+        setLoading(true);
+        fetchMessageChunk()
+      }}
       hasMore={hasMore}
       isReverse={true}
-      initialLoad={true}
-      // useWindow={false}
-      // getScrollParent={() => scrollParentRef}
-      // loader={<div className={styles.loader} key={0}>Loading ...</div>}
+      // initialLoad={true}
+      useWindow={false}
+      getScrollParent={() => scrollParentRef}
+      loader={<div className={styles.loader} key={0}>Loading ...</div>}
   >
       {messagesRendered}
   </InfiniteScroll>
 
+  const emptyMessages = <div className={styles.empty}>Messages not loaded to server</div>
+
   return <div className={styles.layout} ref={(ref) => setScrollParentRef(ref)}>
-    {InfiniteScrollEl}
-    {/* {loading
-      ? <div className={styles.empty}>Loading...</div>
-      : messages.length === 0
-        ? <div className={styles.empty}>Messages not loaded to server</div>
-        : InfiniteScrollEl
-    } */}
+    { InfiniteScrollEl }
+    { isEmptyMessages && emptyMessages }
   </div>
 };
 
