@@ -1,9 +1,7 @@
 .layout {
-  display: flex;
-  flex-direction: column-reverse;
-  overflow-y: auto;
+  overflow: auto;
   height: calc(100vh - var(--topbar-height));
-  padding: 2rem 0;
+  padding: 2rem;
 }
 
 .empty {
@@ -13,4 +11,11 @@
   height: 100%;
   width: 100%;
   color: var(--color-text-secondary);
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 }
