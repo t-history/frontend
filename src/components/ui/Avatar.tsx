@@ -7,6 +7,12 @@ interface AvatarProps {
   active?: boolean;
 }
 
+function getFirstLetterInInUpperCase(input: string): string {
+  const splitter = new GraphemeSplitter();
+  const letters = splitter.splitGraphemes(input);
+  return letters[0].toUpperCase();
+}
+
 // name abbreviation for chat title (e.g. "Telegram chat with Artem" => "TA")
 function makeAbbreviation(input: string): string {
   const words = input.trim().split(/\s+/);
@@ -17,9 +23,8 @@ function makeAbbreviation(input: string): string {
     return 'No name';
   }
 
-  const splitter = new GraphemeSplitter();
-  const firstLetter = splitter.splitGraphemes(firstWord)[0];
-  const lastLetter = splitter.splitGraphemes(lastWord)[0];
+  const firstLetter = getFirstLetterInInUpperCase(firstWord);
+  const lastLetter = getFirstLetterInInUpperCase(lastWord);
 
   if (words.length === 1) {
     return firstLetter;

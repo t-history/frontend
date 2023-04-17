@@ -4,7 +4,8 @@ import axios from 'axios'
 import styles from '@/styles/Home.module.scss'
 import Chats from '@/components/chats/Chats'
 import { IChat } from '@/components/chats/components/ChatItem'
-import useHash from '@/hooks/useHash'
+import Messages from '@/components/messages/Messages'
+import Header from '@/components/messages/Header'
 
 interface HomeProps {
   chats: IChat[];
@@ -12,22 +13,14 @@ interface HomeProps {
 
 const Home: FC<HomeProps> = ({chats}) => {
   const [id, setId] = useState<number | null>(null);
-  const { hash } = useHash();
-
-  const handleHashChange = () => {
-    console.log('hash change');
-    const hash = window.location.hash.slice(1);
-    console.log(hash);
-    setId(parseInt(hash, 10) || null);
-  }
 
   useEffect(() => {
-    console.log('useEffect', hash);
 
-    // return () => {
-    //   window.removeEventListener('hashchange', handleHashChange);
-    // }
-  }, [hash]);
+    const lhash = window.location.hash
+    const id = parseInt(lhash.slice(1), 10) || null;
+
+    setId(id);
+  }, []);
 
   return (
     <div className={styles.layout}>
@@ -40,9 +33,19 @@ const Home: FC<HomeProps> = ({chats}) => {
       <div className={styles.sidebar}>
         <Chats chats={chats}/>
       </div>
+      <div className={styles.header}>
+        { id !== null
+            && <Header chat={chats.find(chat => chat.id = id)} />
+        }
+      </div>
       <div className={styles.messages}>
-        <div className={styles.empty}>Select a chat for start view {id}</div>
-        {/* {children} */}
+        { id === null
+            &&  <div className={styles.empty}>Select a chat for start view</div>
+        }
+        {
+          id !== null
+            && <Messages id={id} />
+        }
       </div>
     </div>
   )

@@ -11,7 +11,7 @@ const Info: FC<InfoProps> = ({title, text, active}) => {
   const activeClass = active ? styles.active : '';
 
   return <div className={styles.layout}>
-      <div className={`${styles.layout} ${activeClass}`}>
+      <div className={`${styles.title} ${activeClass}`}>
         {title}
       </div>
       <div className={`${styles.text} ${activeClass}`}>
