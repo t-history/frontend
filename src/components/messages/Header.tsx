@@ -1,10 +1,10 @@
 import {FC, useState, useEffect} from 'react';
 import styles from './Header.module.scss';
-import {type TChat} from '@/components/chats/components/ChatItem';
+import {type IChat} from '@/components/chats/components/ChatItem';
 import Avatar from '@/components/ui/Avatar';
 
 interface HeaderProps {
-  chat?: TChat;
+  chat?: IChat;
 }
 
 const Header: FC<HeaderProps> = ({chat}) => {

@@ -2,7 +2,6 @@ import {FC, useState, useEffect, useRef} from 'react';
 import styles from './Messages.module.scss';
 import axios from 'axios';
 import MessageEl, {type Message} from './components/MessageEl';
-import { useInView } from 'react-intersection-observer';
 
 interface MessagesProps {
   id: number;
@@ -52,16 +51,6 @@ const Messages: FC<MessagesProps> = ({id}) => {
 
   }, [id]);
 
-  const { ref, inView, entry } = useInView({
-    /* Optional options */
-    threshold: 0,
-  });
-
-  useEffect(() => {
-    if (inView) {
-      console.log('In view');
-    }
-  }, [inView]);
 
   return <div className={styles.layout}>
     {loading
@@ -71,7 +60,6 @@ const Messages: FC<MessagesProps> = ({id}) => {
         : messages.map((message, i) => {
             if (i === 15) message.content += ' alalala'
             return <MessageEl
-              ref={i === 15 ? ref : null}
               message={message}
               key={message.id}
               isOwnMessage={message.sender !== id}

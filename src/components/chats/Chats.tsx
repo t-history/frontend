@@ -1,47 +1,59 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import ChatItem from './components/ChatItem';
-import { TChat } from './components/ChatItem'
+import { IChat } from './components/ChatItem'
 import styles from './Chats.module.scss';
-
-import dynamic from 'next/dynamic';
-import { FixedSizeList as List } from 'react-window';
-
-const NoSSRList = dynamic(() => Promise.resolve(List), { ssr: false });
+import { useVirtualizer } from '@tanstack/react-virtual';
 
 interface ChatsProps {
-  chats: TChat[];
+  chats: IChat[];
 }
 
-type ListItemProps = {
-  index?: number;
-  style?: React.CSSProperties;
-};
-
 const ChatList: FC<ChatsProps> = ({chats}) => {
-  const ListComponent = typeof window === 'undefined' ? List : NoSSRList;
-  const preRenderCount = 100;
+  const parentRef = React.useRef<HTMLDivElement>(null);
+
   const itemSize = 72;
 
-  const ListItem: React.FC<ListItemProps> = ({ index = 0, style }) => {
-    const chat = chats[index + preRenderCount];
-    return <div style={style}>
-        <ChatItem chat={chat} key={index + preRenderCount} />;
-    </div>
-  };
+  const virtualizer = useVirtualizer({
+    count: chats.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => itemSize,
+    overscan: 5,
+  })
 
-  return <div className={styles.layout}>
-    {Array.from({ length: preRenderCount }).map((_, i) => (
-      <ListItem />
-    ))}
-    <ListComponent
-      height={chats.length * itemSize}
-      itemCount={chats.length - preRenderCount}
-      itemSize={itemSize}
-      width='100%'
-      initialScrollOffset={preRenderCount * itemSize}
-    >
-      <ListItem />
-    </ListComponent>
+  const items = virtualizer.getVirtualItems()
+
+  return <div
+        ref={parentRef}
+        className={styles.layout}
+      >
+        {/* The large inner element to hold all of the items */}
+        <div
+          style={{
+            height: `${virtualizer.getTotalSize()}px`,
+            minHeight: `${virtualizer.getTotalSize()}px`,
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          {/* Only the visible items in the virtualizer, manually positioned to be in view */}
+          {items.map((virtualItem: any) => (
+            <div
+              key={virtualItem.key}
+              data-index={virtualItem.index}
+              ref={virtualizer.measureElement}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: `${virtualItem.size}px`,
+                transform: `translateY(${virtualItem.start}px)`,
+              }}
+            >
+              <ChatItem chat={chats[virtualItem.index]} />
+            </div>
+          ))}
+        </div>
   </div>
 };
 

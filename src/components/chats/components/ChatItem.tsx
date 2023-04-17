@@ -5,14 +5,14 @@ import { type Message } from '@/components/messages/components/MessageEl';
 import Avatar from '@/components/ui/Avatar';
 import Info from './components/Info';
 
-export interface TChat {
+export interface IChat {
   id: number;
   title: string;
   lastMessage: Message;
 }
 
 interface ChatProps {
-  chat: TChat;
+  chat: IChat;
 }
 
 const ChatItem: FC<ChatProps> = ({chat}) => {

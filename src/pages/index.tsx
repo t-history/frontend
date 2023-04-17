@@ -3,11 +3,11 @@ import { FC, useEffect, useState } from 'react'
 import axios from 'axios'
 import styles from '@/styles/Home.module.scss'
 import Chats from '@/components/chats/Chats'
-import { TChat } from '@/components/chats/components/ChatItem'
+import { IChat } from '@/components/chats/components/ChatItem'
 import useHash from '@/hooks/useHash'
 
 interface HomeProps {
-  chats: TChat[];
+  chats: IChat[];
 }
 
 const Home: FC<HomeProps> = ({chats}) => {
