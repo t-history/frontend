@@ -7,20 +7,22 @@ import { IChat } from '@/components/chats/components/ChatItem'
 import Messages from '@/components/messages/Messages'
 import Header from '@/components/messages/Header'
 
+import { useAppContext } from '@/providers/Context';
+
 interface HomeProps {
   chats: IChat[];
 }
 
 const Home: FC<HomeProps> = ({chats}) => {
-  const [id, setId] = useState<number | null>(null);
+  const { state, setState } = useAppContext();
 
   useEffect(() => {
 
     const lhash = window.location.hash
     const id = parseInt(lhash.slice(1), 10) || null;
 
-    setId(id);
-  }, []);
+    setState({id});
+  }, [setState]);
 
   return (
     <div className={styles.layout}>
@@ -34,17 +36,17 @@ const Home: FC<HomeProps> = ({chats}) => {
         <Chats chats={chats}/>
       </div>
       <div className={styles.header}>
-        { id !== null
-            && <Header chat={chats.find(chat => chat.id = id)} />
+        { state.id !== null
+            && <Header chat={chats.find(chat => chat.id === state.id)} />
         }
       </div>
       <div className={styles.messages}>
-        { id === null
+        { state.id === null
             &&  <div className={styles.empty}>Select a chat for start view</div>
         }
         {
-          id !== null
-            && <Messages id={id} />
+          state.id !== null
+            && <Messages id={state.id} />
         }
       </div>
     </div>
@@ -53,7 +55,7 @@ const Home: FC<HomeProps> = ({chats}) => {
 
 export async function getServerSideProps() {
   const res = await axios.get(`${process.env.NEXT_BACKEND_URL}/chats`);
-  const chats = res.data; //.slice(0, 100);
+  const chats = res.data;
   return { props: {chats} }
 }
 
