@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, forwardRef} from 'react';
 import styles from './MessageEl.module.scss';
 
 export interface Message {
@@ -13,8 +13,8 @@ interface MessageElProps {
   isOwnMessage: boolean;
 }
 
-const MessageEl: FC<MessageElProps> = ({message, isOwnMessage}) => {
-  return <div className={styles.container}>
+const MessageEl = forwardRef<HTMLDivElement, MessageElProps>(({message, isOwnMessage}, ref) => {
+  return <div className={styles.container}  ref={ref}>
     <div
       key={message.id}
       className={`${styles.message} ${ isOwnMessage ? styles.mymessage : ''}`}
@@ -22,6 +22,7 @@ const MessageEl: FC<MessageElProps> = ({message, isOwnMessage}) => {
       {message.content}
     </div>
   </div>
-};
+});
 
+MessageEl.displayName = 'MessageEl';
 export default MessageEl;

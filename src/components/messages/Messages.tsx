@@ -1,4 +1,4 @@
-import {FC, useState, useEffect} from 'react';
+import {FC, useState, useEffect, useRef} from 'react';
 import styles from './Messages.module.scss';
 import axios from 'axios';
 import MessageEl, {type Message} from './components/MessageEl';

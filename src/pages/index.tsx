@@ -1,15 +1,34 @@
 import Head from 'next/head'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import axios from 'axios'
 import styles from '@/styles/Home.module.scss'
 import Chats from '@/components/chats/Chats'
-import { TChat } from '@/components/chats/components/Chat'
+import { IChat } from '@/components/chats/components/ChatItem'
+import useHash from '@/hooks/useHash'
 
 interface HomeProps {
-  chats: TChat[];
+  chats: IChat[];
 }
 
 const Home: FC<HomeProps> = ({chats}) => {
+  const [id, setId] = useState<number | null>(null);
+  const { hash } = useHash();
+
+  const handleHashChange = () => {
+    console.log('hash change');
+    const hash = window.location.hash.slice(1);
+    console.log(hash);
+    setId(parseInt(hash, 10) || null);
+  }
+
+  useEffect(() => {
+    console.log('useEffect', hash);
+
+    // return () => {
+    //   window.removeEventListener('hashchange', handleHashChange);
+    // }
+  }, [hash]);
+
   return (
     <div className={styles.layout}>
       <Head>
@@ -22,7 +41,7 @@ const Home: FC<HomeProps> = ({chats}) => {
         <Chats chats={chats}/>
       </div>
       <div className={styles.messages}>
-        <div className={styles.empty}>Select a chat for start view</div>
+        <div className={styles.empty}>Select a chat for start view {id}</div>
         {/* {children} */}
       </div>
     </div>
@@ -31,7 +50,7 @@ const Home: FC<HomeProps> = ({chats}) => {
 
 export async function getServerSideProps() {
   const res = await axios.get(`${process.env.NEXT_BACKEND_URL}/chats`);
-  const chats = res.data.slice(0, 100);
+  const chats = res.data; //.slice(0, 100);
   return { props: {chats} }
 }
 
