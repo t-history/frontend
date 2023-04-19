@@ -46,7 +46,7 @@ const Home: FC<HomeProps> = ({chats}) => {
         }
         {
           state.id !== null
-            && <Messages id={state.id} />
+            && <Messages />
         }
       </div>
     </div>
