@@ -19,7 +19,7 @@ function makeAbbreviation(input: string): string {
   const firstWord = words[0];
   const lastWord = words[words.length - 1];
 
-  if (words.length === 0) {
+  if (words.length === 0 || !firstWord) {
     return 'No name';
   }
 
