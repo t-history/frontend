@@ -6,6 +6,7 @@ import Chats from '@/components/chats/Chats'
 import { IChat } from '@/interfaces/Chat'
 import Messages from '@/components/messages/Messages'
 import Header from '@/components/messages/Header'
+import SidebarHeader from '@/components/chats/Header'
 
 import { useAppContext } from '@/providers/Context';
 
@@ -32,6 +33,9 @@ const Home: FC<HomeProps> = ({chats}) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <div className={styles.hsidebar}>
+        <SidebarHeader />
+      </div>
       <div className={styles.sidebar}>
         <Chats chats={chats}/>
       </div>

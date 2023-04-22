@@ -11,9 +11,13 @@
   display: grid;
   grid-template-columns: 400px 1fr;
   grid-template-rows: var(--topbar-height) 1fr;
-  grid-template-areas: 'sidebar header'
+  grid-template-areas: 'hsidebar header'
                        'sidebar messages';
   height: 100vh;
+}
+
+.hsidebar {
+  grid-area: hsidebar;
 }
 
 .messages {

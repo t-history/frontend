@@ -1,4 +1,4 @@
-import {FC, useState, useEffect} from 'react';
+import {FC} from 'react';
 import styles from './Header.module.scss';
 import {type IChat} from '@/interfaces/Chat';
 import Avatar from '@/components/ui/Avatar';
