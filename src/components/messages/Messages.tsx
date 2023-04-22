@@ -1,12 +1,13 @@
 import {FC, useState, useEffect, useRef} from 'react';
 import styles from './Messages.module.scss';
 import axios from 'axios';
-import MessageEl, {type Message} from './components/MessageEl';
+import Message from './components/Message';
 import InfiniteScroll from 'react-infinite-scroller';
 import {useAppContext} from '@/providers/Context';
+import {IMessage} from '@/interfaces/Message';
 
 const Messages: FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [scrollParentRef, setScrollParentRef] = useState<HTMLDivElement | null>(null);
@@ -45,7 +46,7 @@ const Messages: FC = () => {
   }, [state.id]);
 
   const messagesRendered = messages.map((message) => {
-    return <MessageEl message={message} key={message.id} isOwnMessage={message.sender !== state.id}/>
+    return <Message message={message} key={message.id} isOwnMessage={message.sender !== state.id}/>
   });
 
   const InfiniteScrollEl = <InfiniteScroll
