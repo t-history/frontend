@@ -1,6 +1,6 @@
 import {FC, useState, useEffect} from 'react';
 import styles from './Header.module.scss';
-import {type IChat} from '@/components/chats/components/ChatItem';
+import {type IChat} from '@/interfaces/Chat';
 import Avatar from '@/components/ui/Avatar';
 
 interface HeaderProps {

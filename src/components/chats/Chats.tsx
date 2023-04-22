@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import ChatItem from './components/ChatItem';
-import { IChat } from './components/ChatItem'
+import { IChat } from '@/interfaces/Chat'
 import styles from './Chats.module.scss';
 import { useVirtualizer } from '@tanstack/react-virtual';
 

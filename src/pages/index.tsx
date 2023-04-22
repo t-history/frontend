@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react'
 import axios from 'axios'
 import styles from '@/styles/Home.module.scss'
 import Chats from '@/components/chats/Chats'
-import { IChat } from '@/components/chats/components/ChatItem'
+import { IChat } from '@/interfaces/Chat'
 import Messages from '@/components/messages/Messages'
 import Header from '@/components/messages/Header'
 
