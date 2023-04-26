@@ -7,8 +7,10 @@ import SidebarHeader from '@/components/chats/Header'
 import Header from '@/components/messages/Header'
 import Messages from '@/components/messages/Messages'
 import { IChat } from '@/interfaces/Chat'
+import { IQueueState } from '@/interfaces/QueueState';
 import { useAppContext } from '@/providers/Context';
 import styles from '@/styles/Home.module.scss'
+
 
 interface HomeProps {
   chats: IChat[];
@@ -16,6 +18,27 @@ interface HomeProps {
 
 const Home: FC<HomeProps> = ({ chats }) => {
   const { state, setState } = useAppContext();
+  const [queueState, setQueueState] = useState<IQueueState | null>(null);
+
+  useEffect(() => {
+    const source = new EventSource('/api/queue/sse');
+
+    source.onmessage = (event) => {
+      console.log('sse');
+      const newQueueState: IQueueState = JSON.parse(event.data);
+      setQueueState(newQueueState);
+
+      // chats = chats.map(chat => {
+      //   if (newQueueState.chatsStatus[chat.id] === undefined) {
+      //     chats
+      //   }
+      //   return chat;
+      // });
+    };
+    return () => {
+      source.close();
+    };
+  }, []);    
 
   useEffect(() => {
 
@@ -34,7 +57,7 @@ const Home: FC<HomeProps> = ({ chats }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.hsidebar}>
-        <SidebarHeader />
+        <SidebarHeader state={queueState} />
       </div>
       <div className={styles.sidebar}>
         <Chats chats={chats}/>

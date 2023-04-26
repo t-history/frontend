@@ -1,33 +1,18 @@
 import { FC, useEffect, useState } from 'react';
 
+import { IQueueState } from '@/interfaces/QueueState';
+
 import styles from './Header.module.scss';
 
-interface IData {
-  wait: number;
-  completed?: number;
-  failed?: number;  
+interface HeaderProps {
+  state: IQueueState | null
 }
 
-const Header: FC = () => {
-  const [data, setData] = useState<IData | null>(null);
-
-  useEffect(() => {
-    const source = new EventSource('/api/queue/sse');
-
-    source.onmessage = (event) => {
-      console.log('sse');
-      const newData = JSON.parse(event.data);
-      setData(newData);
-    };
-    return () => {
-      source.close();
-    };
-  }, []);    
-
+const Header: FC<HeaderProps> = ({ state }) => {
   return <div className={styles.layout}>
-    {data &&
+    {state &&
       <div className={styles.wait}>
-        {data.wait} - {data.completed} - {data.failed}
+        {state.wait} - {state.completed} - {state.failed}
       </div>
     }
   </div>

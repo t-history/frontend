@@ -1,11 +1,15 @@
 import GraphemeSplitter from 'grapheme-splitter';
 import { FC } from 'react';
 
+import { ChatStatus } from '@/interfaces/Chat';
+
 import styles from './Avatar.module.scss';
+import Status from './Status';
 
 interface AvatarProps {
   title: string;
   active?: boolean;
+  status?: ChatStatus;
 }
 
 function getFirstLetterInInUpperCase(input: string): string {
@@ -34,13 +38,19 @@ function makeAbbreviation(input: string): string {
   return firstLetter + lastLetter;
 }
 
-const Avatar: FC<AvatarProps> = ({ title, active = false }) => {
+const Avatar: FC<AvatarProps> = ({ title, active = false, status }) => {
   const abbr = makeAbbreviation(title);
   const activeClass = active ? styles.active : '';
-  return <div
-    className={`${styles.layout} ${activeClass}`}
-  >
-    {abbr}
+  return <div className={styles.layout}>
+    <div className={`${styles.avatar} ${activeClass}`}>
+      {abbr}
+    </div>
+
+    {status &&
+      <div className={styles.status}>
+        <Status status={status}/>
+      </div>
+    }
   </div>
 }
 

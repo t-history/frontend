@@ -21,7 +21,7 @@ const ChatItem: FC<ChatProps> = ({ chat }) => {
 
   return <Link onClick={() => setState({ id })} href={`/#${id}`} className={`${styles.layout} ${ active ? styles.active : '' }`}>
     <div className={styles.avatar}>
-      <Avatar title={chat.title} active={active} />
+      <Avatar title={chat.title} active={active} status={chat.status} />
     </div>
     <div className={styles.info}>
       <Info chat={chat}/>

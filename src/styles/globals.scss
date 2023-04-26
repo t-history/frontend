@@ -16,13 +16,16 @@
   --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Roboto", "Apple Color Emoji", "Helvetica Neue", sans-serif;
   --messages-container-width: 720px;
   --topbar-height: 3.5rem;
+
+  --color-wait: #FFC107;
+  --color-in-progress: #4CAF50;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --color-chat-hover: #2B2B2B;
     --color-background: #212121;
-    
+
     --color-text: #FFF;
     --color-text-meta: #8c8c91;
     --color-text-secondary: #AAAAAA;

@@ -22,7 +22,7 @@ const Header: FC<HeaderProps> = ({ chat }) => {
   };
 
   return <div className={styles.layout}>
-    <Avatar title={chat.title} />
+    <Avatar title={chat.title} status={chat.status} />
     {chat && chat.title}
     <div className={styles.actions}>
       <button className={styles.actions__item} onClick={handleSync}><FaSyncAlt /></button>
