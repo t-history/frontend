@@ -42,7 +42,7 @@ const Time: FC<TimeProps> = ({ unixtime }) => {
   const dateRange = isToday(date) ? 'today' : isWithinWeekToTomorrow(date) ? 'week' : isLastYear(date) ? 'year' : 'old';
 
   return <span className={styles.layout}>
-    {dateRange === 'today' && date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+    {dateRange === 'today' && date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
     {dateRange === 'week' && date.toLocaleDateString('en-US', { weekday: 'short' })}
     {dateRange === 'year' && date.toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}
     {dateRange === 'old' && date.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}
