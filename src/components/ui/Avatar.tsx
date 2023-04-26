@@ -1,6 +1,7 @@
-import {FC} from 'react';
-import styles from './Avatar.module.scss';
 import GraphemeSplitter from 'grapheme-splitter';
+import { FC } from 'react';
+
+import styles from './Avatar.module.scss';
 
 interface AvatarProps {
   title: string;
@@ -33,7 +34,7 @@ function makeAbbreviation(input: string): string {
   return firstLetter + lastLetter;
 }
 
-const Avatar: FC<AvatarProps> = ({title, active = false}) => {
+const Avatar: FC<AvatarProps> = ({ title, active = false }) => {
   const abbr = makeAbbreviation(title);
   const activeClass = active ? styles.active : '';
   return <div

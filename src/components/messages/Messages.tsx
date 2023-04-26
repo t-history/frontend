@@ -1,10 +1,13 @@
-import {FC, useState, useEffect, useRef} from 'react';
-import styles from './Messages.module.scss';
 import axios from 'axios';
-import Message from './components/Message';
+import { FC, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import {useAppContext} from '@/providers/Context';
-import {IMessage} from '@/interfaces/Message';
+
+import { IMessage } from '@/interfaces/Message';
+import { useAppContext } from '@/providers/Context';
+
+import Message from './components/Message';
+import styles from './Messages.module.scss';
+
 
 const Messages: FC = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
@@ -16,10 +19,10 @@ const Messages: FC = () => {
   const { state } = useAppContext();
 
   const fetchMessageChunk = async () => {
-    console.log("fetchMessageChunk");
+    console.log('fetchMessageChunk');
     try {
       const oldesMessageId = messages.length > 0 ? messages[0].id : 0;
-      
+
       const response = await axios.get(
         `/api/chats/${state.id}/messages?fromMessageId=${oldesMessageId}`
       );
@@ -29,7 +32,7 @@ const Messages: FC = () => {
       setHasMore(response.data.length > 0);
       setEmptyMessages(newMessages.length === 0);
     } catch (error) {
-      console.error("Error on receive data:", error);
+      console.error('Error on receive data:', error);
       setHasMore(false);
     } finally {
       setLoading(false);
@@ -42,20 +45,26 @@ const Messages: FC = () => {
       setLoading(false);
       setHasMore(true);
       setEmptyMessages(false);
-    }
+    };
   }, [state.id]);
 
   const messagesRendered = messages.map((message) => {
-    return <Message message={message} key={message.id} isOwnMessage={message.sender !== state.id}/>
+    return (
+      <Message
+        message={message}
+        key={message.id}
+        isOwnMessage={message.sender !== state.id}
+      />
+    );
   });
 
   const InfiniteScrollEl = <InfiniteScroll
       pageStart={0}
       loadMore={() => {
-        console.log("loadMore");
+        console.log('loadMore');
         if (isLoading) return;
         setLoading(true);
-        fetchMessageChunk()
+        fetchMessageChunk();
       }}
       hasMore={hasMore}
       isReverse={true}
@@ -68,10 +77,12 @@ const Messages: FC = () => {
 
   const emptyMessages = <div className={styles.empty}>Messages not loaded to server</div>
 
-  return <div className={styles.layout} ref={(ref) => setScrollParentRef(ref)}>
-    { InfiniteScrollEl }
-    { isEmptyMessages && emptyMessages }
-  </div>
+  return (
+    <div className={styles.layout} ref={(ref) => setScrollParentRef(ref)}>
+      {InfiniteScrollEl}
+      {isEmptyMessages && emptyMessages}
+    </div>
+  );
 };
 
 export default Messages;

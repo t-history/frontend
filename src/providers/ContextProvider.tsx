@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import Context, { AppContextType, AppStateType } from './Context';
 
 type AppContextProviderProps = {
@@ -6,7 +7,7 @@ type AppContextProviderProps = {
 };
 
 const AppContextProvider: React.FC<AppContextProviderProps> = ({ children }) => {
-  const [state, setState] = useState<AppStateType>({id: null});
+  const [state, setState] = useState<AppStateType>({ id: null });
 
   const contextValue: AppContextType = {
     state,

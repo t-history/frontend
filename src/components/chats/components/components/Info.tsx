@@ -1,15 +1,17 @@
-import {FC} from 'react';
-import styles from './Info.module.scss';
+import { FC } from 'react';
+
 import { IChat } from '@/interfaces/Chat';
 import { useAppContext } from '@/providers/Context';
+
+import styles from './Info.module.scss';
 
 interface InfoProps {
   chat: IChat;
 }
 
-const Info: FC<InfoProps> = ({chat}) => {
+const Info: FC<InfoProps> = ({ chat }) => {
   const { state } = useAppContext();
-  const {title, id, lastMessage } = chat;
+  const { title, id, lastMessage } = chat;
 
   const activeClass = id === state.id ? styles.active : '';
   const isText = lastMessage.type === 'messageText';

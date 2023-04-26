@@ -1,14 +1,16 @@
-import React, {FC} from 'react';
-import ChatItem from './components/ChatItem';
-import { IChat } from '@/interfaces/Chat'
-import styles from './Chats.module.scss';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import React, { FC } from 'react';
+
+import { IChat } from '@/interfaces/Chat'
+
+import styles from './Chats.module.scss';
+import ChatItem from './components/ChatItem';
 
 interface ChatsProps {
   chats: IChat[];
 }
 
-const ChatList: FC<ChatsProps> = ({chats}) => {
+const ChatList: FC<ChatsProps> = ({ chats }) => {
   const parentRef = React.useRef<HTMLDivElement>(null);
 
   const itemSize = 72;

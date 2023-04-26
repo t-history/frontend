@@ -1,20 +1,20 @@
+import axios from 'axios'
 import Head from 'next/head'
 import { FC, useEffect, useState } from 'react'
-import axios from 'axios'
-import styles from '@/styles/Home.module.scss'
-import Chats from '@/components/chats/Chats'
-import { IChat } from '@/interfaces/Chat'
-import Messages from '@/components/messages/Messages'
-import Header from '@/components/messages/Header'
-import SidebarHeader from '@/components/chats/Header'
 
+import Chats from '@/components/chats/Chats'
+import SidebarHeader from '@/components/chats/Header'
+import Header from '@/components/messages/Header'
+import Messages from '@/components/messages/Messages'
+import { IChat } from '@/interfaces/Chat'
 import { useAppContext } from '@/providers/Context';
+import styles from '@/styles/Home.module.scss'
 
 interface HomeProps {
   chats: IChat[];
 }
 
-const Home: FC<HomeProps> = ({chats}) => {
+const Home: FC<HomeProps> = ({ chats }) => {
   const { state, setState } = useAppContext();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const Home: FC<HomeProps> = ({chats}) => {
     const lhash = window.location.hash
     const id = parseInt(lhash.slice(1), 10) || null;
 
-    setState({id});
+    setState({ id });
   }, [setState]);
 
   return (
@@ -60,7 +60,7 @@ const Home: FC<HomeProps> = ({chats}) => {
 export async function getServerSideProps() {
   const res = await axios.get(`${process.env.NEXT_BACKEND_URL}/chats`);
   const chats = res.data;
-  return { props: {chats} }
+  return { props: { chats } }
 }
 
 export default Home
