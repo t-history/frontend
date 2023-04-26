@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import { IMessage } from '@/interfaces/Message';
-import { useAppContext } from '@/providers/Context';
+import { useAppContext } from '@/providers/AppContext';
 
 import Message from './components/Message';
 import styles from './Messages.module.scss';

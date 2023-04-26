@@ -3,7 +3,7 @@ import { FC } from 'react';
 
 import Avatar from '@/components/ui/Avatar';
 import { IChat } from '@/interfaces/Chat';
-import { useAppContext } from '@/providers/Context';
+import { useAppContext } from '@/providers/AppContext';
 
 import styles from './ChatItem.module.scss';
 import Info from './components/Info';

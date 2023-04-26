@@ -2,9 +2,14 @@ import { createContext, useContext } from 'react';
 
 export type AppStateType = { id: number | null }
 
+import { IChat } from '@/interfaces/Chat';
+
 export type AppContextType = {
-  state: AppStateType,
+  state: AppStateType
   setState: React.Dispatch<React.SetStateAction<AppStateType>>
+  chats: IChat[]
+  updateChat: (updatedChat: IChat) => void,
+  setChats: React.Dispatch<React.SetStateAction<IChat[]>>
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined); 

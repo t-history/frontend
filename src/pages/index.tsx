@@ -8,16 +8,11 @@ import Header from '@/components/messages/Header'
 import Messages from '@/components/messages/Messages'
 import { IChat } from '@/interfaces/Chat'
 import { IQueueState } from '@/interfaces/QueueState';
-import { useAppContext } from '@/providers/Context';
+import { useAppContext } from '@/providers/AppContext';
 import styles from '@/styles/Home.module.scss'
 
-
-interface HomeProps {
-  chats: IChat[];
-}
-
-const Home: FC<HomeProps> = ({ chats }) => {
-  const { state, setState } = useAppContext();
+const Home: FC = () => {
+  const { state, setState, chats, setChats } = useAppContext();
   const [queueState, setQueueState] = useState<IQueueState | null>(null);
 
   useEffect(() => {
@@ -28,12 +23,22 @@ const Home: FC<HomeProps> = ({ chats }) => {
       const newQueueState: IQueueState = JSON.parse(event.data);
       setQueueState(newQueueState);
 
-      // chats = chats.map(chat => {
-      //   if (newQueueState.chatsStatus[chat.id] === undefined) {
-      //     chats
-      //   }
-      //   return chat;
-      // });
+      const chatStatus = newQueueState.chatsStatus;
+      const newChats: IChat[] = chats.map(chat => {
+        if (chatStatus[chat.id] === undefined) {
+          return {
+            ...chat,
+            status: 'idle',
+          };
+        }
+
+        return {
+          ...chat,
+          status: chatStatus[chat.id],
+        };
+      });
+
+      setChats(newChats);
     };
     return () => {
       source.close();

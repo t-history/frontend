@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { IChat } from '@/interfaces/Chat';
-import { useAppContext } from '@/providers/Context';
+import { useAppContext } from '@/providers/AppContext';
 
 import Time from './components/Time';
 import Title from './components/Title';

@@ -4,15 +4,17 @@ import { VscSync } from 'react-icons/vsc';
 
 import Avatar from '@/components/ui/Avatar';
 import { type IChat } from '@/interfaces/Chat';
+import { useAppContext } from '@/providers/AppContext';
 
 import styles from './Header.module.scss';
-
 
 interface HeaderProps {
   chat?: IChat;
 }
 
 const Header: FC<HeaderProps> = ({ chat }) => {
+  const { updateChat } = useAppContext();
+
   if (!chat) {
     return <div className={styles.layout}>No chat</div>
   }
@@ -20,9 +22,12 @@ const Header: FC<HeaderProps> = ({ chat }) => {
 
   const handleSync = () => {
     if (!isChatIdle) return;
+    updateChat({
+      ...chat,
+      status: 'queued'
+    })
     axios.post(`/api/queue/chat/${chat.id}/sync`)
   };
-
 
   return <div className={styles.layout}>
     <Avatar title={chat.title} status={chat.status} />
