@@ -7,4 +7,4 @@ export interface IChat {
   status: ChatStatus;
 }
 
-export type ChatStatus = 'wait' | 'in_progress' | 'idle';
+export type ChatStatus = 'queued' | 'in_progress' | 'idle';

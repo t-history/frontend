@@ -11,7 +11,7 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({ state }) => {
   return <div className={styles.layout}>
     {state &&
-      <div className={styles.wait}>
+      <div>
         {state.wait} - {state.completed} - {state.failed}
       </div>
     }
