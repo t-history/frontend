@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Head from 'next/head'
+import { useRouter } from 'next/router';
 import { FC, useEffect, useState } from 'react'
 
 import Chats from '@/components/chats/Chats'
@@ -13,6 +14,7 @@ import styles from '@/styles/Home.module.scss'
 const Home: FC = () => {
   const { state, setState, chats, setChats } = useAppContext();
   const [queueState, setQueueState] = useState<IQueueState | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const source = new EventSource('/api/queue/sse');
@@ -51,7 +53,10 @@ const Home: FC = () => {
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
-      event.code === 'Escape' && setState({ id: null })
+      if (event.code === 'Escape') {
+        setState({ id: null })
+        router.push('/')
+      };
     };
 
     window.addEventListener('keydown', handleKeydown);
