@@ -20,16 +20,20 @@
 .avatar {
   grid-area: avatar;
   height: 3.375rem;
-  width: 3.375rem;  
+  width: 3.375rem;
   margin: auto;
 }
 
 .info {
   grid-area: name;
   height: 3.375rem;
-  
+
   width: 100%;
   overflow: hidden;
   display: flex;
   align-items: center;
+}
+
+.not-synchronizable {
+  opacity: 0.5
 }

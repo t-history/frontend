@@ -1,8 +1,9 @@
 import { createContext, useContext } from 'react';
 
-export type AppStateType = { id: number | null }
 
 import { IChat } from '@/interfaces/Chat';
+
+export type AppStateType = { chat: IChat | null }
 
 export type AppContextType = {
   state: AppStateType

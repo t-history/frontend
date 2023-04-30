@@ -11,7 +11,7 @@ type AppContextProviderProps = {
 };
 
 const AppContextProvider: React.FC<AppContextProviderProps> = ({ children, initChats }) => {
-  const [state, setState] = useState<AppStateType>({ id: null });
+  const [state, setState] = useState<AppStateType>({ chat: null });
   const [chats, setChats] = useState<IChat[]>(initChats);
 
   const updateChat = (updatedChat: IChat) : void => {

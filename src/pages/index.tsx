@@ -6,7 +6,6 @@ import Chats from '@/components/chats/Chats'
 import SidebarHeader from '@/components/chats/Header'
 import Header from '@/components/messages/Header'
 import Messages from '@/components/messages/Messages'
-import { IChat } from '@/interfaces/Chat'
 import { IQueueState } from '@/interfaces/QueueState';
 import { useAppContext } from '@/providers/AppContext';
 import styles from '@/styles/Home.module.scss'
@@ -24,34 +23,44 @@ const Home: FC = () => {
       setQueueState(newQueueState);
 
       const chatStatus = newQueueState.chatsStatus;
-      const newChats: IChat[] = chats.map(chat => {
-        if (chatStatus[chat.id] === undefined) {
-          return {
-            ...chat,
-            status: 'idle',
-          };
-        }
 
-        return {
-          ...chat,
-          status: chatStatus[chat.id],
-        };
+      const existsChangedStatus = chats.some(chat => {
+        const taskFinished = chatStatus[chat.id] === undefined && chat.status !== 'idle'
+        const taskChangedStatus = chatStatus[chat.id] === 'in_progress' && chatStatus[chat.id] !== chat.status;
+        return taskFinished || taskChangedStatus;
       });
 
-      setChats(newChats);
+      if (existsChangedStatus) {
+        axios.get('/api/chats').then(({ data }) => {
+          setChats(data);
+        });
+      }
     };
     return () => {
       source.close();
     };
-  }, []);    
+  }, [chats, setChats]);    
 
   useEffect(() => {
 
     const lhash = window.location.hash
     const id = parseInt(lhash.slice(1), 10) || null;
+    const chat = chats.find(c => c.id === id) || null
 
-    setState({ id });
-  }, [setState]);
+    setState({ chat });
+  }, [setState, chats]);
+
+  useEffect(() => {
+    const handleKeydown = (event: KeyboardEvent) => {
+      event.code === 'Escape' && setState({ chat: null })
+    };
+
+    window.addEventListener('keydown', handleKeydown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+    };
+  }, [setState])
 
   return (
     <div className={styles.layout}>
@@ -68,19 +77,11 @@ const Home: FC = () => {
         <Chats chats={chats}/>
       </div>
       <div className={styles.header}>
-        { state.id !== null
-            && <Header chat={chats.find(chat => chat.id === state.id)} />
+        { state.chat !== null
+            && <Header chat={chats.find(chat => chat.id === state.chat?.id)} />
         }
       </div>
-      <div className={styles.messages}>
-        { state.id === null
-            &&  <div className={styles.empty}>Select a chat for start view</div>
-        }
-        {
-          state.id !== null
-            && <Messages />
-        }
-      </div>
+      <div className={styles.messages}><Messages /></div>
     </div>
   )
 }

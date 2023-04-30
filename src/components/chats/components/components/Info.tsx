@@ -15,7 +15,7 @@ const Info: FC<InfoProps> = ({ chat }) => {
   const { state } = useAppContext();
   const { title, id, lastMessage } = chat;
 
-  const activeClass = id === state.id ? styles.active : '';
+  const activeClass = id === state.chat?.id ? styles.active : '';
   const isText = lastMessage.type === 'messageText';
 
   return <div className={styles.layout}>

@@ -17,14 +17,16 @@ const Messages: FC = () => {
   const [isEmptyMessages, setEmptyMessages] = useState<boolean>(false);
 
   const { state } = useAppContext();
+  const { chat } = state
 
   const fetchMessageChunk = async () => {
     console.log('fetchMessageChunk');
+
     try {
       const oldesMessageId = messages.length > 0 ? messages[0].id : 0;
 
       const response = await axios.get(
-        `/api/chats/${state.id}/messages?fromMessageId=${oldesMessageId}`
+        `/api/chats/${state.chat?.id}/messages?fromMessageId=${oldesMessageId}`
       );
 
       const newMessages = [...response.data, ...messages];
@@ -46,14 +48,14 @@ const Messages: FC = () => {
       setHasMore(true);
       setEmptyMessages(false);
     };
-  }, [state.id]);
+  }, [state.chat]);
 
   const messagesRendered = messages.map((message) => {
     return (
       <Message
         message={message}
         key={message.id}
-        isOwnMessage={message.sender !== state.id}
+        isOwnMessage={message.sender !== state.chat?.id}
       />
     );
   });
@@ -75,12 +77,20 @@ const Messages: FC = () => {
       {messagesRendered}
   </InfiniteScroll>
 
+
+  const isChatSelected = chat !== null
+  const isNotSynchronizableChat = !chat?.isSynchronizable
+
+  const chatNotSelected = <div className={styles.empty}>Select a chat for start view</div>
+  const notSynchronizableChat = <div className={styles.empty}>This chat does not synchronizable</div>
   const emptyMessages = <div className={styles.empty}>Messages not loaded to server</div>
 
   return (
     <div className={styles.layout} ref={(ref) => setScrollParentRef(ref)}>
-      {InfiniteScrollEl}
-      {isEmptyMessages && emptyMessages}
+      {!isChatSelected && chatNotSelected}
+      {isChatSelected && isNotSynchronizableChat && notSynchronizableChat}
+      {isChatSelected && !isNotSynchronizableChat && isEmptyMessages && emptyMessages}
+      {isChatSelected && !isNotSynchronizableChat && InfiniteScrollEl}
     </div>
   );
 };
