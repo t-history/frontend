@@ -6,7 +6,6 @@ import Chats from '@/components/chats/Chats'
 import SidebarHeader from '@/components/chats/Header'
 import Header from '@/components/messages/Header'
 import Messages from '@/components/messages/Messages'
-import { IChat } from '@/interfaces/Chat'
 import { IQueueState } from '@/interfaces/QueueState';
 import { useAppContext } from '@/providers/AppContext';
 import styles from '@/styles/Home.module.scss'
@@ -24,26 +23,23 @@ const Home: FC = () => {
       setQueueState(newQueueState);
 
       const chatStatus = newQueueState.chatsStatus;
-      const newChats: IChat[] = chats.map(chat => {
-        if (chatStatus[chat.id] === undefined) {
-          return {
-            ...chat,
-            status: 'idle',
-          };
-        }
 
-        return {
-          ...chat,
-          status: chatStatus[chat.id],
-        };
+      const existsChangedStatus = chats.some(chat => {
+        const taskFinished = chatStatus[chat.id] === undefined && chat.status !== 'idle'
+        const taskChangedStatus = chatStatus[chat.id] === 'in_progress' && chatStatus[chat.id] !== chat.status;
+        return taskFinished || taskChangedStatus;
       });
 
-      setChats(newChats);
+      if (existsChangedStatus) {
+        axios.get('/api/chats').then(({ data }) => {
+          setChats(data);
+        });
+      }
     };
     return () => {
       source.close();
     };
-  }, []);    
+  }, [chats, setChats]);    
 
   useEffect(() => {
 
@@ -51,8 +47,22 @@ const Home: FC = () => {
     const id = parseInt(lhash.slice(1), 10) || null;
 
     setState({ id });
-  }, [setState]);
+  }, [setState, chats]);
 
+  useEffect(() => {
+    const handleKeydown = (event: KeyboardEvent) => {
+      event.code === 'Escape' && setState({ id: null })
+    };
+
+    window.addEventListener('keydown', handleKeydown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+    };
+  }, [setState])
+
+  const selectedChat = chats.find(chat => chat.id === state.id);
+  const selectedChatIsSyncronizible = selectedChat?.isSynchronizable;
   return (
     <div className={styles.layout}>
       <Head>
@@ -69,15 +79,18 @@ const Home: FC = () => {
       </div>
       <div className={styles.header}>
         { state.id !== null
-            && <Header chat={chats.find(chat => chat.id === state.id)} />
+            && <Header chat={selectedChat} />
         }
       </div>
       <div className={styles.messages}>
         { state.id === null
             &&  <div className={styles.empty}>Select a chat for start view</div>
         }
+        { state.id !== null && !selectedChatIsSyncronizible
+            && <div className={styles.empty}>This chat is not synchronizable</div>
+        }
         {
-          state.id !== null
+          state.id !== null && selectedChatIsSyncronizible
             && <Messages />
         }
       </div>

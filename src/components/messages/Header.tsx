@@ -33,16 +33,18 @@ const Header: FC<HeaderProps> = ({ chat }) => {
     <Avatar title={chat.title} status={chat.status} />
     {chat && chat.title}
     <div className={styles.actions}>
-      <button
-        className={`
-          ${styles.actions__item}
-          ${!isChatIdle && styles.actions__item__disabled}
-          
-        `}
-        onClick={handleSync}
-      >
-        <VscSync className={`${!isChatIdle && styles.actions__item__spin}`} />
-      </button>
+      {chat.isSynchronizable &&
+        <button
+          className={`
+            ${styles.actions__item}
+            ${!isChatIdle && styles.actions__item__disabled}
+            
+          `}
+          onClick={handleSync}
+        >
+          <VscSync className={`${!isChatIdle && styles.actions__item__spin}`} />
+        </button>
+      }
     </div>
   </div>
 };

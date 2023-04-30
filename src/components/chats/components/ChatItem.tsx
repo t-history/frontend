@@ -17,9 +17,16 @@ const ChatItem: FC<ChatProps> = ({ chat }) => {
   const { state, setState } = useAppContext();
 
   const { id } = chat;
-  const active = state.id === id;
+  const active = state.id === chat.id;
 
-  return <Link onClick={() => setState({ id })} href={`/#${id}`} className={`${styles.layout} ${ active ? styles.active : '' }`}>
+  const activeClass = active ? styles.active : ''
+  const synchronizableClass = chat.isSynchronizable ? '' : styles['not-synchronizable']
+
+  return <Link
+    onClick={() => setState({ id })}
+    href={`/#${id}`}
+    className={`${styles.layout} ${ activeClass } ${ synchronizableClass }`
+  }>
     <div className={styles.avatar}>
       <Avatar title={chat.title} active={active} status={chat.status} />
     </div>
