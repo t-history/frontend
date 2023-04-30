@@ -42,7 +42,7 @@ const Header: FC<HeaderProps> = ({ chat }) => {
           `}
           onClick={handleSync}
         >
-          <VscSync className={`${!isChatIdle && styles.actions__item__spin}`} />
+          <VscSync className={`${!isChatIdle && styles.actions__item__spin}`} title="Synchronize chat"/>
         </button>
       }
     </div>

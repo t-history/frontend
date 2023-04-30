@@ -28,8 +28,8 @@ const Header: FC<HeaderProps> = ({ state }) => {
     >
       {
         showOnlySynchronizableChats ?
-          <VscEyeClosed className={`${styles.active}`} /> :
-          <VscEye className={`${styles.active}`} />
+          <VscEyeClosed className={`${styles.active}`} title="show not synchronizable chats"/> :
+          <VscEye className={`${styles.active}`} title="hide not synchronizable chats"/>
       }
     </button>
   </div>
