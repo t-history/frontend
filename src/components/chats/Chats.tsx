@@ -60,6 +60,12 @@ const ChatList: FC<ChatsProps> = ({ chats }) => {
             </div>
           ))}
         </div>
+        {
+          !visibleChats.length &&
+            <div className={styles.empty}>
+              No chats found
+            </div>
+        }
   </div>
 };
 
