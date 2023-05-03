@@ -1,0 +1,15 @@
+.layout {
+  height: 0.5rem;
+  width: 0.5rem;
+  border-radius: 0.25rem;
+  align-self: center;
+  margin-left: 0.25rem;
+}
+
+.queued {
+  background-color: var(--color-queued);
+}
+
+.in_progress {
+  background-color: var(--color-in-progress);
+}

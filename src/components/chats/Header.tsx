@@ -1,35 +1,37 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
+import { VscEye, VscEyeClosed } from 'react-icons/vsc';
+
+import { IQueueState } from '@/interfaces/QueueState';
+import { useAppContext } from '@/providers/AppContext'
 
 import styles from './Header.module.scss';
 
-interface IData {
-  wait: number;
-  completed?: number;
-  failed?: number;  
+interface HeaderProps {
+  state: IQueueState | null
 }
 
-const Header: FC = () => {
-  const [data, setData] = useState<IData | null>(null);
-
-  useEffect(() => {
-    const source = new EventSource('/api/queue/sse');
-
-    source.onmessage = (event) => {
-      console.log('sse');
-      const newData = JSON.parse(event.data);
-      setData(newData);
-    };
-    return () => {
-      source.close();
-    };
-  }, []);    
-
+const Header: FC<HeaderProps> = ({ state }) => {
+  const { showOnlySynchronizableChats, setShowOnlySynchronizableChats } = useAppContext()
+  
   return <div className={styles.layout}>
-    {data &&
-      <div className={styles.wait}>
-        {data.wait} - {data.completed} - {data.failed}
+    {state &&
+      <div className={styles.title}>
+        {state.wait} - {state.completed} - {state.failed}
       </div>
     }
+    <button
+      className={`
+        ${styles.action}  
+        ${showOnlySynchronizableChats ? '' : styles['action--active']}
+      `}
+      onClick={() => setShowOnlySynchronizableChats(!showOnlySynchronizableChats)}
+    >
+      {
+        showOnlySynchronizableChats ?
+          <VscEyeClosed className={`${styles.active}`} title="show not synchronizable chats"/> :
+          <VscEye className={`${styles.active}`} title="hide not synchronizable chats"/>
+      }
+    </button>
   </div>
 };
 

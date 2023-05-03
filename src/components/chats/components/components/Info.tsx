@@ -1,8 +1,10 @@
 import { FC } from 'react';
 
 import { IChat } from '@/interfaces/Chat';
-import { useAppContext } from '@/providers/Context';
+import { useAppContext } from '@/providers/AppContext';
 
+import Time from './components/Time';
+import Title from './components/Title';
 import styles from './Info.module.scss';
 
 interface InfoProps {
@@ -18,7 +20,8 @@ const Info: FC<InfoProps> = ({ chat }) => {
 
   return <div className={styles.layout}>
       <div className={`${styles.title} ${activeClass}`}>
-        {title}
+        <Title title={title} />
+        <Time unixtime={lastMessage.unixtime} />
       </div>
       <div className={`${styles.text} ${activeClass}`}>
         {isText && lastMessage.content}

@@ -2,6 +2,7 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import React, { FC } from 'react';
 
 import { IChat } from '@/interfaces/Chat'
+import { useAppContext } from '@/providers/AppContext'
 
 import styles from './Chats.module.scss';
 import ChatItem from './components/ChatItem';
@@ -11,12 +12,15 @@ interface ChatsProps {
 }
 
 const ChatList: FC<ChatsProps> = ({ chats }) => {
+  const { showOnlySynchronizableChats } = useAppContext()
+
+  const visibleChats = showOnlySynchronizableChats ? chats.filter(chat => chat.isSynchronizable) : chats
   const parentRef = React.useRef<HTMLDivElement>(null);
 
   const itemSize = 72;
 
   const virtualizer = useVirtualizer({
-    count: chats.length,
+    count: visibleChats.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => itemSize,
     overscan: 5,
@@ -52,10 +56,16 @@ const ChatList: FC<ChatsProps> = ({ chats }) => {
                 transform: `translateY(${virtualItem.start}px)`,
               }}
             >
-              <ChatItem chat={chats[virtualItem.index]} />
+              <ChatItem chat={visibleChats[virtualItem.index]} />
             </div>
           ))}
         </div>
+        {
+          !visibleChats.length &&
+            <div className={styles.empty}>
+              No chats found
+            </div>
+        }
   </div>
 };
 

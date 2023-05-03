@@ -5,7 +5,19 @@
   padding: 0 0.5rem;
   height: 100%;
   overflow: auto;
-  
+
   background-color: var(--color-background);
   border-right: 1px solid var(--color-borders);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  text-align: center;
 }

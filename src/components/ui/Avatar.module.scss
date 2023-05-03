@@ -1,18 +1,31 @@
 .layout {
-  height:100%;
-  width:100%;
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  height: 100%;
+  width: 100%;
+
+  position: relative;
+}
+
+.avatar {
+  height: 100%;
+  width: 100%;
 
   border-radius: 50%;
   background-color: var(--color-avatar-background);
   color: var(--color-text);
   overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .active {
   color: #FFF
+}
+
+.status {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

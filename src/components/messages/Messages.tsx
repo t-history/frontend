@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import { IMessage } from '@/interfaces/Message';
-import { useAppContext } from '@/providers/Context';
+import { useAppContext } from '@/providers/AppContext';
 
 import Message from './components/Message';
 import styles from './Messages.module.scss';
@@ -17,6 +17,7 @@ const Messages: FC = () => {
   const [isEmptyMessages, setEmptyMessages] = useState<boolean>(false);
 
   const { state } = useAppContext();
+  const { id } = state
 
   const fetchMessageChunk = async () => {
     console.log('fetchMessageChunk');
@@ -24,7 +25,7 @@ const Messages: FC = () => {
       const oldesMessageId = messages.length > 0 ? messages[0].id : 0;
 
       const response = await axios.get(
-        `/api/chats/${state.id}/messages?fromMessageId=${oldesMessageId}`
+        `/api/chats/${id}/messages?fromMessageId=${oldesMessageId}`
       );
 
       const newMessages = [...response.data, ...messages];
@@ -46,14 +47,14 @@ const Messages: FC = () => {
       setHasMore(true);
       setEmptyMessages(false);
     };
-  }, [state.id]);
+  }, [id]);
 
   const messagesRendered = messages.map((message) => {
     return (
       <Message
         message={message}
         key={message.id}
-        isOwnMessage={message.sender !== state.id}
+        isOwnMessage={message.sender !== id}
       />
     );
   });
@@ -79,8 +80,8 @@ const Messages: FC = () => {
 
   return (
     <div className={styles.layout} ref={(ref) => setScrollParentRef(ref)}>
-      {InfiniteScrollEl}
       {isEmptyMessages && emptyMessages}
+      {InfiniteScrollEl}
     </div>
   );
 };
