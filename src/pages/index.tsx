@@ -64,7 +64,7 @@ const Home: FC = () => {
     return () => {
       window.removeEventListener('keydown', handleKeydown);
     };
-  }, [setState])
+  }, [setState, router])
 
   const selectedChat = chats.find(chat => chat.id === state.id);
   const selectedChatIsSyncronizible = selectedChat?.isSynchronizable;
@@ -104,7 +104,7 @@ const Home: FC = () => {
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/chats`);
+  const res = await axios.get('http://localhost:8080/chats');
   const chats = res.data;
   return { props: { chats } }
 }
