@@ -104,7 +104,7 @@ const Home: FC = () => {
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.NEXT_BACKEND_URL}/chats`);
+  const res = await axios.get(`${process.env.API_URL}/chats`);
   const chats = res.data;
   return { props: { chats } }
 }
