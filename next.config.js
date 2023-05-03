@@ -8,7 +8,8 @@ const nextConfig = {
         destination: `${process.env.API_URL}/:path*`,
       },
     ];
-  }
+  },
+  output: 'standalone',
 }
 
 module.exports = nextConfig
