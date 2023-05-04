@@ -104,7 +104,7 @@ const Home: FC = () => {
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get('http://localhost:8080/chats');
+  const res = await axios.get('http://api:8080/chats');
   const chats = res.data;
   return { props: { chats } }
 }
