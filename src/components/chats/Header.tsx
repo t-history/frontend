@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { VscEye, VscEyeClosed } from 'react-icons/vsc';
+import { VscInfo, VscEye, VscEyeClosed } from 'react-icons/vsc';
 
+import Action from '@/components/ui/Action';
 import { IQueueState } from '@/interfaces/QueueState';
 import { useAppContext } from '@/providers/AppContext'
 
@@ -19,19 +20,22 @@ const Header: FC<HeaderProps> = ({ state }) => {
         {state.wait} - {state.completed} - {state.failed}
       </div>
     }
-    <button
-      className={`
-        ${styles.action}  
-        ${showOnlySynchronizableChats ? '' : styles['action--active']}
-      `}
+    <div className={styles.spacer}></div>
+    
+    <Action
+      active={!showOnlySynchronizableChats}
       onClick={() => setShowOnlySynchronizableChats(!showOnlySynchronizableChats)}
     >
       {
         showOnlySynchronizableChats ?
-          <VscEyeClosed className={`${styles.active}`} title="show not synchronizable chats"/> :
-          <VscEye className={`${styles.active}`} title="hide not synchronizable chats"/>
+          <VscEyeClosed title="show not synchronizable chats"/> :
+          <VscEye title="hide not synchronizable chats"/>
       }
-    </button>
+    </Action>
+
+    <Action>
+      <VscInfo title="show info"/>
+    </Action>
   </div>
 };
 

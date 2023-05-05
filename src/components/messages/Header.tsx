@@ -2,6 +2,7 @@ import axios from 'axios';
 import { FC } from 'react';
 import { VscSync } from 'react-icons/vsc';
 
+import Action from '@/components/ui/Action';
 import Avatar from '@/components/ui/Avatar';
 import { type IChat } from '@/interfaces/Chat';
 import { useAppContext } from '@/providers/AppContext';
@@ -34,16 +35,9 @@ const Header: FC<HeaderProps> = ({ chat }) => {
     {chat && chat.title}
     <div className={styles.actions}>
       {chat.isSynchronizable &&
-        <button
-          className={`
-            ${styles.actions__item}
-            ${!isChatIdle && styles.actions__item__disabled}
-            
-          `}
-          onClick={handleSync}
-        >
-          <VscSync className={`${!isChatIdle && styles.actions__item__spin}`} title="Synchronize chat"/>
-        </button>
+        <Action onClick={handleSync} disabled={!isChatIdle}>
+          <VscSync className={`${!isChatIdle && styles['actions__item--spin']}`} title="Synchronize chat"/>
+        </Action>
       }
     </div>
   </div>
