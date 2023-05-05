@@ -15,7 +15,6 @@ const Action: FC<ActionProps> = ({
   onClick = () => {},
   disabled = false
 }) => {
-  console.log('Action', { active, disabled })
   return <button
     className={`
       ${styles.action}

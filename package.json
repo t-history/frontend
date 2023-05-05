@@ -6,6 +6,7 @@
     "email" : "ilya@mois.pro",
     "url" : "http://mois.pro/"
   },
+  "homepage": "https://github.com/t-history/frontend",
   "license": "MIT",
   "private": true,
   "scripts": {

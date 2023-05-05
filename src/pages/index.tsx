@@ -69,7 +69,7 @@ const Home: FC = () => {
   const selectedChat = chats.find(chat => chat.id === state.id);
   const selectedChatIsSyncronizible = selectedChat?.isSynchronizable;
   return (
-    <div className={styles.layout}>
+    <div className={styles.layout} id="index">
       <Head>
         <title>THistory</title>
         <meta name="description" content="App for store telegram message history" />
@@ -99,6 +99,7 @@ const Home: FC = () => {
             && <Messages />
         }
       </div>
+      {/* <div id="portal" className={styles.portal}/> */}
     </div>
   )
 }

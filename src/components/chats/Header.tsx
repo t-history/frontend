@@ -1,7 +1,9 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { createPortal } from 'react-dom'
 import { VscInfo, VscEye, VscEyeClosed } from 'react-icons/vsc';
 
 import Action from '@/components/ui/Action';
+import Info from '@/components/ui/Info';
 import { IQueueState } from '@/interfaces/QueueState';
 import { useAppContext } from '@/providers/AppContext'
 
@@ -13,6 +15,7 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ state }) => {
   const { showOnlySynchronizableChats, setShowOnlySynchronizableChats } = useAppContext()
+  const [ isInfoOpen, setIsInfoOpen ] = useState<boolean>(false)
   
   return <div className={styles.layout}>
     {state &&
@@ -33,9 +36,14 @@ const Header: FC<HeaderProps> = ({ state }) => {
       }
     </Action>
 
-    <Action>
+    <Action active={false} onClick={() => setIsInfoOpen(!isInfoOpen)}>
       <VscInfo title="show info"/>
     </Action>
+
+    {isInfoOpen && createPortal(
+      <Info onClose={() => setIsInfoOpen(false)}/>,
+      document.body
+    )}
   </div>
 };
 

@@ -12,8 +12,9 @@
   grid-template-columns: 400px 1fr;
   grid-template-rows: var(--topbar-height) 1fr;
   grid-template-areas: 'hsidebar header'
-                       'sidebar messages';
+    'sidebar messages';
   height: 100vh;
+  position: relative;
 }
 
 .hsidebar {
@@ -32,4 +33,12 @@
 
 .header {
   grid-area: header;
+}
+
+.portal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
