@@ -30,7 +30,7 @@ const Home: FC = () => {
         const taskFinished = chatStatus[chat.id] === undefined && chat.status !== 'idle'
         const taskChangedStatus = chatStatus[chat.id] === 'in_progress' && chatStatus[chat.id] !== chat.status;
         return taskFinished || taskChangedStatus;
-      });
+      }) || chats.length !== newQueueState.chatsCount;
 
       if (existsChangedStatus) {
         axios.get('/api/chats').then(({ data }) => {
