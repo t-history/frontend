@@ -21,11 +21,11 @@ const Header: FC<HeaderProps> = ({ state }) => {
   const [ isQueueOpen, setIsQueueOpen ] = useState<boolean>(false)
   
   return <div className={styles.layout}>
-    {state &&
+    {/* {state &&
       <div className={styles.title}>
-        {state.wait} - {state.completed} - {state.failed}
+        {state.queued} - {state.completed} - {state.failed}
       </div>
-    }
+    } */}
     <div className={styles.spacer}></div>
     
     <Action

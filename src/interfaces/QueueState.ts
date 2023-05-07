@@ -1,11 +1,14 @@
 import { ChatStatus } from './Chat';
 
 export interface IQueueState {
-  wait: number;
-  inProgress?: number;
+  queued: number;
+  in_progress?: number;
   completed?: number;
   failed?: number;
   chatsStatus: {
     [key: number]: ChatStatus;
   }
+  chatsCount: number;
+  nextChatListJob: number | null;
+  periodChatListJob: number | null;
 }
