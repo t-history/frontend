@@ -1,13 +1,15 @@
 import { FC, useState } from 'react';
 import { createPortal } from 'react-dom'
-import { VscInfo, VscEye, VscEyeClosed } from 'react-icons/vsc';
+import { VscInfo, VscEye, VscEyeClosed, VscListUnordered } from 'react-icons/vsc';
 
 import Action from '@/components/ui/Action';
 import Info from '@/components/ui/Info';
+import Queue from '@/components/ui/Queue';
 import { IQueueState } from '@/interfaces/QueueState';
 import { useAppContext } from '@/providers/AppContext'
 
 import styles from './Header.module.scss';
+
 
 interface HeaderProps {
   state: IQueueState | null
@@ -16,6 +18,7 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({ state }) => {
   const { showOnlySynchronizableChats, setShowOnlySynchronizableChats } = useAppContext()
   const [ isInfoOpen, setIsInfoOpen ] = useState<boolean>(false)
+  const [ isQueueOpen, setIsQueueOpen ] = useState<boolean>(false)
   
   return <div className={styles.layout}>
     {state &&
@@ -36,12 +39,21 @@ const Header: FC<HeaderProps> = ({ state }) => {
       }
     </Action>
 
+    <Action active={false} onClick={() => setIsQueueOpen(!isQueueOpen)}>
+      <VscListUnordered title="show queue"/>
+    </Action>
+
     <Action active={false} onClick={() => setIsInfoOpen(!isInfoOpen)}>
       <VscInfo title="show info"/>
     </Action>
 
     {isInfoOpen && createPortal(
       <Info onClose={() => setIsInfoOpen(false)}/>,
+      document.body
+    )}
+
+    {isQueueOpen && state && createPortal(
+      <Queue state={state} onClose={() => setIsQueueOpen(false)}/>,
       document.body
     )}
   </div>
