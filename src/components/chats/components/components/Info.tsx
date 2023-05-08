@@ -21,7 +21,7 @@ const Info: FC<InfoProps> = ({ chat }) => {
   return <div className={styles.layout}>
       <div className={`${styles.title} ${activeClass}`}>
         <Title title={title} />
-        <Time unixtime={lastMessage.unixtime} />
+        <Time unixtime={lastMessage.unixtime} className={activeClass}/>
       </div>
       <div className={`${styles.text} ${activeClass}`}>
         {isText && lastMessage.content}

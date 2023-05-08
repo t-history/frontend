@@ -9,6 +9,10 @@
   align-self: flex-start;
   max-width: 80%;
   overflow-wrap: break-word;
+
+  &--removed {
+    opacity: 0.5;
+  }
 }
 
 .mymessage {

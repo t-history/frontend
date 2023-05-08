@@ -4,6 +4,7 @@ import styles from './Time.module.scss';
 
 interface TimeProps {
   unixtime: number;
+  className: string;
 }
 
 const isToday = (date: Date) => {
@@ -36,12 +37,12 @@ function isLastYear(date: Date): boolean {
   return date >= lastYear && date < today;
 }
 
-const Time: FC<TimeProps> = ({ unixtime }) => {
+const Time: FC<TimeProps> = ({ unixtime, className }) => {
   const date = new Date(unixtime * 1000);
 
   const dateRange = isToday(date) ? 'today' : isWithinWeekToTomorrow(date) ? 'week' : isLastYear(date) ? 'year' : 'old';
 
-  return <span className={styles.layout}>
+  return <span className={styles.layout + ' ' + className}>
     {dateRange === 'today' && date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
     {dateRange === 'week' && date.toLocaleDateString('en-US', { weekday: 'short' })}
     {dateRange === 'year' && date.toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}

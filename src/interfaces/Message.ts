@@ -1,7 +1,8 @@
 export interface IMessage {
   id: number;
-  content: string;  
+  content: string;
   sender: number;
   unixtime: number;
   type: string;
+  removed?: boolean;
 }

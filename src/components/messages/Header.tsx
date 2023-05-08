@@ -27,7 +27,7 @@ const Header: FC<HeaderProps> = ({ chat }) => {
       ...chat,
       status: 'queued'
     })
-    axios.post(`/api/queue/chat/${chat.id}/sync`)
+    axios.post(`/api/queue/chat/${chat.id}/full`)
   };
 
   return <div className={styles.layout}>
