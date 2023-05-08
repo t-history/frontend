@@ -5,6 +5,7 @@ export interface IQueueState {
   in_progress?: number;
   completed?: number;
   failed?: number;
+  wait?: number;
   chatsStatus: {
     [key: number]: ChatStatus;
   }

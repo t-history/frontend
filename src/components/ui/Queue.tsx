@@ -44,7 +44,7 @@ const Queue: FC<QueueProps> = ({ onClose, state }) => {
     <div className={styles.queue} onClick={e => e.stopPropagation()}>
       <div className={styles.queue__content}>
         <div className={styles.queue__item}>
-          <div className={styles.queue__item__title}>Wait</div>
+          <div className={styles.queue__item__title}>Queued</div>
           <div className={styles.queue__item__value}>
               {state.queued}
           </div>
@@ -53,12 +53,6 @@ const Queue: FC<QueueProps> = ({ onClose, state }) => {
           <div className={styles.queue__item__title}>In Progress</div>
           <div className={styles.queue__item__value}>
               {state.in_progress || 0}
-          </div>
-        </div>
-        <div className={styles.queue__item}>
-          <div className={styles.queue__item__title}>Failed</div>
-          <div className={styles.queue__item__value}>
-              {state.failed}
           </div>
         </div>
         {/* <div className={styles.queue__item}>
@@ -71,6 +65,20 @@ const Queue: FC<QueueProps> = ({ onClose, state }) => {
             <a href={homepage} target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </div> */}
+      </div>
+      <div className={styles.queue__content}>
+        <div className={styles.queue__item}>
+          <div className={styles.queue__item__title}>Wait</div>
+          <div className={styles.queue__item__value}>
+              {state.wait}
+          </div>
+        </div>
+        <div className={styles.queue__item}>
+          <div className={styles.queue__item__title}>Failed</div>
+          <div className={styles.queue__item__value}>
+              {state.failed}
+          </div>
+        </div>
       </div>
       <div className={styles.queue__timer}>
         <div className={styles.queue__item__title}>Time to sync</div>
