@@ -37,13 +37,23 @@ function isLastYear(date: Date): boolean {
   return date >= lastYear && date < today;
 }
 
+// toLocaleTimeString has problem with 00:38 (24:38)
+// date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+function getTodayTime(date: Date) {
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const formattedTime = `${hours}:${minutes}`;
+
+  return formattedTime
+}
+
 const Time: FC<TimeProps> = ({ unixtime, className }) => {
   const date = new Date(unixtime * 1000);
 
   const dateRange = isToday(date) ? 'today' : isWithinWeekToTomorrow(date) ? 'week' : isLastYear(date) ? 'year' : 'old';
 
   return <span className={styles.layout + ' ' + className}>
-    {dateRange === 'today' && date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+    {dateRange === 'today' && getTodayTime(date)}
     {dateRange === 'week' && date.toLocaleDateString('en-US', { weekday: 'short' })}
     {dateRange === 'year' && date.toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}
     {dateRange === 'old' && date.toLocaleDateString('en-US', { year: '2-digit', month: '2-digit', day: '2-digit' })}
